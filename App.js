@@ -18,34 +18,27 @@ import {
   Animated,
 } from 'react-native';
 import {Tab, Text, TabView, Icon} from '@rneui/themed';
+import StickyHeaderWrapper from './js/components/StickyHeaderWrapper';
 import StickyHeader from './js/components/StickyHeader';
-import {DATA} from './data';
+import {DATA, LIST} from './data';
+import Table from './js/components/Table';
 
 const App = () => {
   const [index, setIndex] = useState(0);
   let scrollY = useRef(new Animated.Value(0)).current;
-  let [headHeight, setHeadHeight] = useState(-1);
+  // let [headHeight, setHeadHeight] = useState(-1);
+
+  const tableData = LIST;
 
   return (
     <SafeAreaView style={styles.container}>
-      <Animated.ScrollView
-        style={{flex: 1}}
-        onScroll={
-          Animated.event(
-            [
-              {
-                nativeEvent: {contentOffset: {y: scrollY}}, // 记录滑动距离
-              },
-            ],
-            {useNativeDriver: true},
-          ) // 使用原生动画驱动
-        }
-        scrollEventThrottle={1}>
+      <StickyHeaderWrapper scrollY={scrollY}>
         <View
-          onLayout={e => {
-            let {height} = e.nativeEvent.layout;
-            setHeadHeight(height); // 给头部高度赋值
-          }}>
+        // onLayout={e => {
+        //   let {height} = e.nativeEvent.layout;
+        //   setHeadHeight(height); // 给头部高度赋值
+        // }}
+        >
           {DATA.map((book, index) => {
             return (
               <Text style={styles.scrollText} key={book.id}>
@@ -56,7 +49,7 @@ const App = () => {
           {/* // 里面放入第一部分组件 */}
         </View>
         <StickyHeader
-          stickyHeaderY={headHeight} // 把头部高度传入
+          // stickyHeaderY={headHeight} // 把头部高度传入
           stickyScrollY={scrollY} // 把滑动距离传入
         >
           <Tab
@@ -65,6 +58,9 @@ const App = () => {
             indicatorStyle={{
               backgroundColor: 'white',
               height: 3,
+            }}
+            containerStyle={{
+              height: 60,
             }}
             variant="primary">
             <Tab.Item
@@ -92,6 +88,36 @@ const App = () => {
             </Text>
           );
         })}
+        <Table data={tableData} />
+        {DATA.map((book, index) => {
+          return (
+            <Text style={styles.scrollText} key={book.id}>
+              {book.title}
+            </Text>
+          );
+        })}
+        {DATA.map((book, index) => {
+          return (
+            <Text style={styles.scrollText} key={book.id}>
+              {book.title}
+            </Text>
+          );
+        })}
+        <StickyHeader
+          // stickyHeaderY={headHeight} // 把头部高度传入
+          stickyScrollY={scrollY} // 把滑动距离传入
+          offsetTop={60}>
+          <View style={{backgroundColor: 'white'}}>
+            <Text>text</Text>
+          </View>
+        </StickyHeader>
+        {DATA.map((book, index) => {
+          return (
+            <Text style={styles.scrollText} key={book.id}>
+              {book.title}
+            </Text>
+          );
+        })}
         {DATA.map((book, index) => {
           return (
             <Text style={styles.scrollText} key={book.id}>
@@ -111,8 +137,8 @@ const App = () => {
           data={this.state.dataSource}
           renderItem={({item}) => this._createListItem(item)}
         /> */}
-      </Animated.ScrollView>
-      {/* <ScrollView
+
+        {/* <ScrollView
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {y: scrollOffsetY}}}],
@@ -148,6 +174,7 @@ const App = () => {
           );
         })}
       </ScrollView> */}
+      </StickyHeaderWrapper>
     </SafeAreaView>
   );
 };

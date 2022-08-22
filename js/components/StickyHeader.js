@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {Text, View, StyleSheet, Animated} from 'react-native';
+import {Animated} from 'react-native';
 
-const DynamicHeader = props => {
+const StickyHeader = props => {
   const [stickyLayoutY, setStickyLayoutY] = useState(0);
   // 函数可以提出去
   const _onLayout = event => {
@@ -14,13 +14,15 @@ const DynamicHeader = props => {
     stickyScrollY = new Animated.Value(0),
     children,
     style,
+    offsetTop = 0,
   } = props;
 
-  const y = stickyHeaderY != -1 ? stickyHeaderY : stickyLayoutY;
-  const translateY = stickyScrollY.interpolate({
+  const y = stickyHeaderY !== -1 ? stickyHeaderY : stickyLayoutY;
+  const translateYOrgin = stickyScrollY.interpolate({
     inputRange: [-1, 0, y, y + 1],
     outputRange: [0, 0, 0, 1],
   });
+  const translateY = Animated.add(translateYOrgin, offsetTop);
   return (
     <Animated.View
       onLayout={_onLayout}
@@ -30,22 +32,4 @@ const DynamicHeader = props => {
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    left: 0,
-    right: 0,
-    paddingTop: 10,
-    height: 50,
-    backgroundColor: 'green',
-  },
-  headerText: {
-    color: '#fff',
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
-
-export default DynamicHeader;
+export default StickyHeader;
