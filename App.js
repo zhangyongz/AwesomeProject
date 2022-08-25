@@ -88,29 +88,7 @@ const App = () => {
             </Text>
           );
         })}
-        <Table data={tableData} />
-        {DATA.map((book, index) => {
-          return (
-            <Text style={styles.scrollText} key={book.id}>
-              {book.title}
-            </Text>
-          );
-        })}
-        {DATA.map((book, index) => {
-          return (
-            <Text style={styles.scrollText} key={book.id}>
-              {book.title}
-            </Text>
-          );
-        })}
-        <StickyHeader
-          // stickyHeaderY={headHeight} // 把头部高度传入
-          stickyScrollY={scrollY} // 把滑动距离传入
-          offsetTop={60}>
-          <View style={{backgroundColor: 'white'}}>
-            <Text>text</Text>
-          </View>
-        </StickyHeader>
+        <Table stickyScrollY={scrollY} />
         {DATA.map((book, index) => {
           return (
             <Text style={styles.scrollText} key={book.id}>

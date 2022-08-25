@@ -12,7 +12,10 @@ const StickyHeaderWrapper = props => {
               nativeEvent: {contentOffset: {y: props.scrollY}}, // 记录滑动距离
             },
           ],
-          {useNativeDriver: true},
+          {
+            useNativeDriver: true,
+            listener: event => console.log(event.nativeEvent.contentOffset.y),
+          },
         ) // 使用原生动画驱动
       }
       scrollEventThrottle={1}>
