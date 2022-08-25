@@ -14,7 +14,7 @@ const StickyHeaderWrapper = props => {
           ],
           {
             useNativeDriver: true,
-            listener: event => console.log(event.nativeEvent.contentOffset.y),
+            // listener: event => console.log(event.nativeEvent.contentOffset.y),
           },
         ) // 使用原生动画驱动
       }
