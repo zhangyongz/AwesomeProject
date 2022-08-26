@@ -37,39 +37,43 @@ const Table = ({stickyScrollY}) => {
     <>
       <StickyHeader stickyScrollY={stickyScrollY} offsetTop={60}>
         <View style={styles.th}>
-          <View style={styles.tr}>
-            <View style={(styles.td, styles.thFirstTd)}>
-              <Text>text0</Text>
+          <View style={styles.leftCols}>
+            <View style={styles.tr}>
+              <View style={[styles.td]}>
+                <Text>text0</Text>
+              </View>
             </View>
-            {/* <ScrollView
+          </View>
+          {/* <ScrollView
               horizontal={true}
               scrollEnabled={false}
               ref={thScrollViewRef}> */}
-            {/* <ScrollView></ScrollView> */}
-            <ScrollView>
-              <Animated.View
-                style={[styles.thRightCols, {transform: [{translateX}]}]}>
+          {/* <ScrollView></ScrollView> */}
+          <ScrollView>
+            <Animated.View
+              style={[styles.rightCols, {transform: [{translateX}]}]}>
+              <View style={styles.tr}>
                 {/* <View style={styles.thRightCols}> */}
                 {new Array(20).fill(1).map((_, index) => {
                   return (
-                    <View style={styles.td} key={index}>
+                    <View style={[styles.td]} key={index}>
                       <Text>text{index + 1}</Text>
                     </View>
                   );
                 })}
-                {/* </ScrollView> */}
-              </Animated.View>
-            </ScrollView>
-          </View>
+              </View>
+              {/* </ScrollView> */}
+            </Animated.View>
+          </ScrollView>
         </View>
       </StickyHeader>
 
       <View style={styles.tb}>
-        <View style={styles.tbLeftCols}>
+        <View style={styles.leftCols}>
           {new Array(20).fill(1).map((_, index) => {
             return (
               <View style={styles.tr} key={index}>
-                <View style={styles.td} key={index}>
+                <View style={[styles.td]} key={index}>
                   <Text>text{index + 1}</Text>
                 </View>
               </View>
@@ -77,13 +81,13 @@ const Table = ({stickyScrollY}) => {
           })}
         </View>
         <Animated.ScrollView horizontal={true} onScroll={tbOnScroll}>
-          <View style={styles.tbRightCols}>
+          <View style={styles.rightCols}>
             {new Array(20).fill(1).map((_, index) => {
               return (
                 <View style={styles.tr} key={index}>
                   {new Array(20).fill(1).map((__, index2) => {
                     return (
-                      <View style={styles.td} key={index2}>
+                      <View style={[styles.td, styles.rightTd]} key={index2}>
                         <Text>text{index2 + 1}</Text>
                       </View>
                     );
@@ -103,6 +107,7 @@ const styles = StyleSheet.create({
   th: {
     // height: 50,
     backgroundColor: '#f8f8f8',
+    flexDirection: 'row',
   },
   tb: {
     // height: 50,
@@ -110,17 +115,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   tr: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    display: 'flex',
+    // display: 'flex',
     flexDirection: 'row',
     // alignItems: 'center',
   },
-  thRightCols: {flexDirection: 'row'},
-  tbLeftCols: {width: 50},
-  tbRightCols: {},
-  td: {},
-  thFirstTd: {width: 50},
+  // rightCols: {flexDirection: 'row'},
+  leftCols: {
+    width: 60,
+    borderRightWidth: 1,
+    borderRightColor: '#f0f0f0',
+  },
+  rightCols: {},
+  td: {
+    width: 65,
+    padding: 10,
+  },
+  rightTd: {
+    borderRightWidth: 1,
+    borderRightColor: '#f0f0f0',
+  },
 });
 
 export default Table;
